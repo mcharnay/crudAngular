@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Employee } from './models/employee';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,33 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-crud';
+  employeeArray: Employee[] = [
+    { id: 1, name: "Michel", country: "Chile" },
+    { id: 2, name: "Karín", country: "China" },
+    { id: 3, name: "Momo", country: "Perú" }
+  ];
+
+  selectedEmployee: Employee = new Employee();
+
+  openForEdit(employee: Employee) {
+    this.selectedEmployee = employee;
+  }
+
+  addOrEdit() {
+    if(this.selectedEmployee.id === 0){
+      this.selectedEmployee.id = this.employeeArray.length + 1;
+      this.employeeArray.push(this.selectedEmployee);
+
+    }
+    this.selectedEmployee = new Employee();
+  }
+
+  delete(){
+    this.employeeArray = this.employeeArray.filter(x => x != this.selectedEmployee);
+    this.selectedEmployee = new  Employee();
+  }
+
+
+
+
 }
